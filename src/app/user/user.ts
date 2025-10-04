@@ -4,8 +4,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DialogAddUser } from '../dialog-add-user/dialog-add-user';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { User } from '../../models/user.class';
+
 
 @Component({
   selector: 'app-user',
@@ -15,16 +17,20 @@ import {MatNativeDateModule } from '@angular/material/core';
     MatTooltipModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
   templateUrl: './user.html',
   styleUrl: './user.scss',
 })
 export class UserComponent {
-   constructor(private dialog: MatDialog) {}
+  user = new User;
+ 
 
-   
+  constructor(private dialog: MatDialog) {
+
+  }
+
   openDialog() {
-    this.dialog.open(DialogAddUser)
+    this.dialog.open(DialogAddUser);
   }
 }
