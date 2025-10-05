@@ -6,9 +6,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/user.class';
+import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-dialog-add-user',
+  standalone: true,
   imports: [
     MatInputModule,
     MatFormFieldModule,
@@ -21,11 +24,23 @@ import { User } from '../../models/user.class';
   styleUrl: './dialog-add-user.scss',
 })
 export class DialogAddUser {
+  private firestore = inject(Firestore);
+
   user = new User();
-   birthDate!: Date;
+  birthDate!: Date;
 
   saveUser() {
     this.user.birthDate = this.birthDate.getTime();
     console.log('current user is', this.user);
+
+    const usersCollection = collection(this.firestore, 'users');
+
+    addDoc(usersCollection, this.user.toJson())
+      .then((result) => {
+        console.log('User added:', result);
+      })
+      .catch((error) => {
+        console.error('Error adding user:', error);
+      });
   }
 }
