@@ -8,6 +8,9 @@ import { FormsModule } from '@angular/forms';
 import { User } from '../../models/user.class';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { inject } from '@angular/core';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-dialog-add-user',
@@ -19,7 +22,10 @@ import { inject } from '@angular/core';
     MatNativeDateModule,
     MatButtonModule,
     FormsModule,
-  ],
+    MatProgressBarModule,
+    NgIf,
+   
+],
   templateUrl: './dialog-add-user.html',
   styleUrl: './dialog-add-user.scss',
 })
@@ -28,15 +34,18 @@ export class DialogAddUser {
 
   user = new User();
   birthDate!: Date;
+  loading = false;
 
   saveUser() {
     this.user.birthDate = this.birthDate.getTime();
     console.log('current user is', this.user);
+    this.loading = true;
 
     const usersCollection = collection(this.firestore, 'users');
 
     addDoc(usersCollection, this.user.toJson())
       .then((result) => {
+        this.loading = false;
         console.log('User added:', result);
       })
       .catch((error) => {
