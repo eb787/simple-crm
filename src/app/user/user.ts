@@ -7,6 +7,7 @@ import { DialogAddUser } from '../dialog-add-user/dialog-add-user';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { User } from '../../models/user.class';
+import {MatCardModule} from '@angular/material/card';
 
 
 @Component({
@@ -18,6 +19,7 @@ import { User } from '../../models/user.class';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCardModule,
   ],
   templateUrl: './user.html',
   styleUrl: './user.scss',

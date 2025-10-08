@@ -10,6 +10,7 @@ import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { inject } from '@angular/core';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { NgIf } from '@angular/common';
+import { MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -31,6 +32,7 @@ import { NgIf } from '@angular/common';
 })
 export class DialogAddUser {
   private firestore = inject(Firestore);
+  public dialogRef: MatDialogRef<DialogAddUser> = inject(MatDialogRef);
 
   user = new User();
   birthDate!: Date;
@@ -46,6 +48,7 @@ export class DialogAddUser {
     addDoc(usersCollection, this.user.toJson())
       .then((result) => {
         this.loading = false;
+        this.dialogRef.close();
         console.log('User added:', result);
       })
       .catch((error) => {
